@@ -29,23 +29,6 @@
       `(acons ,key ,val nil)
       `(acons ,key ,val (alist ,@others)))))
 
-(defmacro switch (term &rest maybe-then-others)
-  "Similar to c's switch statement. First parameter is the item to be tested.
-  Rest of parameters are pairs of values to which the item is compared using
-  (equal ...) and the value that the switch statement will return. The last
-  pair may optionally start with \"otherwise\", in which case it will always
-  match."
-  (if (endp maybe-then-others)
-    nil
-    (let ((maybe (first (first maybe-then-others)))
-          (then (second (first maybe-then-others)))
-          (others (rest maybe-then-others)))
-      (if (equal maybe 'otherwise)
-        then
-        `(if (equal ,term ,maybe)
-           ,then
-           (switch ,term ,@others))))))
-
 (defun make-identity-alist (key vals)
   (if (endp vals)
     vals
@@ -100,14 +83,14 @@
           '(thms . nil))
     (let ((subs (get-subs-from-file-r filename (rest obj)))
           (evnt (first obj)))
-      (switch (first evnt)
-              ('in-package (put-assoc 'package (second evnt) subs))
-              ('defun (add-function-to-subs evnt subs))
-              ('defthm (add-thm-to-subs evnt subs))
-              ('defabbrev (add-macro-to-subs evnt subs))
-              ('defmacro (add-macro-to-subs evnt subs))
-              ('defconst (add-const-to-subs evnt subs))
-              (otherwise subs)))))
+      (case (first evnt)
+        ('in-package (put-assoc 'package (second evnt) subs))
+        ('defun (add-function-to-subs evnt subs))
+        ('defthm (add-thm-to-subs evnt subs))
+        ('defabbrev (add-macro-to-subs evnt subs))
+        ('defmacro (add-macro-to-subs evnt subs))
+        ('defconst (add-const-to-subs evnt subs))
+        (otherwise subs)))))
 
 (defun get-subs-from-file (filename state)
   "Get the template substitutions required by book.tmpl from the supplied
