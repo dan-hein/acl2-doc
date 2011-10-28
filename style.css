@@ -1,0 +1,27 @@
+* {
+  font-family: sans-serif;
+}
+
+h1, h2 {
+  font-weight: bold;
+}
+h1 {
+  font-size: 20pt;
+  background: #ddd;
+}
+h2 {
+  font-size: 16pt;
+  background: #eee;
+}
+dl {
+}
+dl dt {
+  margin-top: 1ex;
+  font-weight: bold;
+}
+dl dt:after {
+  content: ": "
+}
+dl dd {
+  margin: 2ex 3em;
+}

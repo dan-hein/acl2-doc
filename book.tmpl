@@ -1,0 +1,53 @@
+"<!doctype html>"
+(link ((href . "style.css") (rel . "stylesheet")))
+
+(title filename)
+
+"Package: " (i package)
+
+(h1 filename)
+
+(h2 "Summary")
+(ul ((class . "toc"))
+    (li (a ((href . "#Constants")) "Constants"))
+    (ul ((class . "toc"))
+        (each consts (li (a ((href . hash-name)) name))))
+    (li (a ((href . "#Macros")) "Macros"))
+    (ul ((class . "toc"))
+        (each macros (li (a ((href . hash-name)) name))))
+    (li (a ((href . "#Functions")) "Functions"))
+    (ul ((class . "toc"))
+        (each defuns (li (a ((href . hash-name)) name))))
+    (li (a ((href . "#Theorems")) "Theorems"))
+    (ul ((class . "toc"))
+        (each thms   (li (a ((href . hash-name)) name)))))
+
+(h2 ((id . "Constants")) "Constants")
+(dl
+  (each consts
+        (dt ((id . name)) name) 
+        (dd doc)
+        (hr)))
+
+(h2 ((id . "Macros")) "Macros")
+(dl
+  (each macros
+        (dt ((id . name)) name) 
+        (dd doc)
+        (hr)))
+
+(h2 ((id . "Functions")) "Functions")
+(dl
+  (each defuns
+        (dt ((id . name)) "(" name
+            (each params
+                  " " (var param)) ")" )
+        (dd doc)
+        (hr)))
+
+(h2 ((id . "Theorems")) "Theorems")
+(dl
+  (each thms
+        (dt ((id . name)) name) 
+        (dd doc)
+        (hr)))
